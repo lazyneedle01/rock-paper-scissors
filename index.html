@@ -5,14 +5,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper Scissors</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Dirt&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="app.js" defer></script>
 </head>
 
 <body>
     <div class="container">
-        <h1>Rock | Paper | Scissors</h1>
-        <code>To start the game, just type 'playGame()' in the console.</code>
+        <h1>Rock _ Paper _ Scissors</h1>
+        <div class="players">
+            <p>Player</p>
+            <p>Computer</p>
+        </div>
+        <div class="playground">
+            <div class="player">
+                <span class="rock">rock</span>
+                <span class="paper">paper</span>
+                <span class="scissors">scissors</span>
+            </div>
+            <div class="computer">
+                <span class="rock">rock</span>
+                <span class="paper">paper</span>
+                <span class="scissors">scissors</span>
+            </div>
+        </div>
+        <div class="scores">
+            <p class="player-score">score points: <span id="point">0</span> points.</p>
+            <p class="computer-score">score points: <span id="point">0</span> points.</p>
+        </div>
+        <hr>
+        <div class="winner-wrapper">
+            <p class="game-noti">The one who gets 3 points first will win!</p>
+            <p class="winner">Who will be the winner?</p>
+        </div>
     </div>
 </body>
 

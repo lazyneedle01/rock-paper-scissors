@@ -1,68 +1,72 @@
+// pScore - player score point, cScore - computer score point
+let pScore = 0;
+let cScore = 0;
 const gameItems = ["rock", "paper", "scissors"];
-let humanScore = 0;
-let computerScore = 0;
+const playerPick = document.querySelector('.player');   
+const playerScore = document.querySelector('.player-score #point');
+const computerScore = document.querySelector('.computer-score #point');
+const winnerText = document.querySelector('.winner');
+const gameNoti = document.querySelector('.game-noti');
+
+playerPick.addEventListener('click', (e) => {
+    let playerChoice = e.target.classList.value;
+    let computerChoice = getRandomItem(gameItems);
+
+    playRound(playerChoice, computerChoice);
+    playerScore.textContent = pScore;
+    computerScore.textContent = cScore;
+
+    getWinner(pScore, cScore);
+    cleanAndRestartGame();
+});
 
 const getRandomItem = (items) => {
     const index = Math.floor(Math.random() * 3);
     return items[index];
 };
 
-function getHumanChoice() {
-    const userChoice = prompt("What will you pick, bro?", "");
-    return userChoice.toLowerCase();
-}
-
 function playRound(humanChoice, computerChoice) {
     if (humanChoice === "rock" && computerChoice === "scissors") {
         console.log("You Win! rock beats scissors")
-        humanScore++;
+        pScore++;
     } else if (humanChoice === "paper" && computerChoice === "rock") {
         console.log("You win! paper beats rock");
-        humanScore++;
+        pScore++;
     } else if (humanChoice === "scissors" && computerChoice === "paper") {
         console.log("You win! scissors beats paper");
-        humanScore++;
+        pScore++;
     } else if (computerChoice === "rock" && humanChoice === "scissors") {
         console.log("Computer Win! rock beats scissors");
-        computerScore++;
+        cScore++;
     } else if (computerChoice === "paper" && humanChoice === "rock") {
         console.log("Computer Win! paper beats rock");
-        computerScore++;
+        cScore++;
     } else if (computerChoice === "scissors" && humanChoice === "paper") {
         console.log("Computer Win! scissors beats paper");
-        computerScore++;
+        cScore++;
     } else {
         console.log("Same choice! again");
     }
 }
 
-function getWinner(humanScore, computerScore) {
-    // in case of 3 rounds with same choices and next rounds with each player winning. 
-    if (humanScore === computerScore) {
-        console.log("Play a game next time!.");
-        return;
+function getWinner(playerSP, computerSP) {
+    if (playerSP === 3) {
+        winnerText.textContent = "--- You (player) win the match. ---";
+    } else if (computerSP === 3) {
+        winnerText.textContent = "--- (computer) win the match. ---";
     }
-
-    return humanScore > computerScore ? 
-        `Winner: Human (${humanScore})points` : 
-        `Winner: Computer (${computerScore})points`;
 }
 
-function playGame() {
-    // for each round, both hamanSelection and computerSelection need to get new value again.
-    // after each round, update the score points.
-    for (let i = 0; i < 5; i++) {
-        const humanSelection = getHumanChoice();
-        const computerSelection = getRandomItem(gameItems);
-        playRound(humanSelection, computerSelection);
-    }
-    
-    // after the game end, annount a winner.
-    console.log(getWinner(humanScore, computerScore));
+function cleanAndRestartGame() {
+    if (pScore === 3 || cScore === 3) {
+        gameNoti.textContent = "Game will resume after 5s.";
 
-    // clear the game stats after a while
-    setTimeout(() => {
-        humanScore = 0;
-        computerScore = 0;
-    }, 5000);
+        setTimeout(() => {
+            gameNoti.textContent = "The one who gets 3 points first will win!";
+            pScore = 0;
+            cScore = 0;
+            playerScore.textContent = 0;
+            computerScore.textContent = 0;
+        }, 5000);
+    }
 }
